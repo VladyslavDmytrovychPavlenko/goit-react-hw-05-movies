@@ -43,13 +43,14 @@ export const SearchFormBtnLabel = styled.span`
 export const MovieList = styled.ul`
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 20px;
 `;
 export const MovieCard = styled.li`
   display: flex;
   flex-direction: column;
   background: white;
-  max-width: 270px;
+  max-width: 250px;
   justify-content: space-between;
   &:hover {
     transform: scale(1.06);

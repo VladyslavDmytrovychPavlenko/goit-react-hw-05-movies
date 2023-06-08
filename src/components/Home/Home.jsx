@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { fetchMoviesTrends } from 'API/API';
 import { BeatLoader } from 'react-spinners';
+import { useLocation } from 'react-router-dom';
 
 import {
   TrendCard,
@@ -13,8 +14,10 @@ import {
 } from './Home.styled';
 
 const Home = () => {
+  const location = useLocation();
   const [trends, setTrends] = useState([]);
   const [loading, setLoading] = useState(true);
+  console.log(location);
 
   useEffect(() => {
     fetchMoviesTrends().then(trending => {
@@ -60,10 +63,10 @@ const Home = () => {
       <TrendList>
         {trends.map(({ title, id, poster_path, release_date }, index) => (
           <TrendCard key={index}>
-            <TitleLink to={`movies/${id}`} id={id}>
+            <TitleLink to={`movies/${id}`} state={{ from: location }} id={id}>
               <img
                 src={`https://image.tmdb.org/t/p/w500${poster_path}`}
-                width={270}
+                width={250}
                 alt=""
               />
               <Title>{title}</Title>
@@ -78,5 +81,4 @@ const Home = () => {
     </Cont>
   );
 };
-
 export default Home;

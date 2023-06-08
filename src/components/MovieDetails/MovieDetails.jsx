@@ -1,23 +1,15 @@
-import {
-  NavLink,
-  Outlet,
-  useParams,
-  useNavigate,
-  useLocation,
-} from 'react-router-dom';
+import { NavLink, Outlet, useParams, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import { useState, useEffect, Suspense } from 'react';
+import { useState, useEffect, Suspense, useRef } from 'react';
 import { Cont } from 'components/Cont';
-import { fetchMoviesDetails, fetchMoviesBySearch } from 'API/API';
+import { fetchMoviesDetails } from 'API/API';
 import { Puff } from 'react-loader-spinner';
 
 const MoviesDetails = () => {
-  const { movieId } = useParams();
-  const navigate = useNavigate();
-  const location = useLocation();
-  const searchQuery = new URLSearchParams(location.search).get('query');
-
   const [movie, setMovie] = useState(null);
+  const location = useLocation();
+  const { movieId } = useParams();
+  const searchQuery = useRef(location.state?.from ?? '/movies');
 
   useEffect(() => {
     fetchMoviesDetails(movieId).then(setMovie);
@@ -30,15 +22,13 @@ const MoviesDetails = () => {
   const { poster_path, release_date, popularity, overview, genres, title } =
     movie;
 
-  const handleGoBack = () => {
-    navigate(`/movies?query=${searchQuery}`);
-  };
-
   return (
     <Cont as="main">
-      <button onClick={handleGoBack} style={backButtonStyle}>
-        Go Back
-      </button>
+      <NavLink to={searchQuery.current}>
+        <button type="button" style={backButtonStyle}>
+          Go Back
+        </button>
+      </NavLink>
       <Cont
         as="section"
         pt={15}
@@ -48,7 +38,7 @@ const MoviesDetails = () => {
       >
         <img
           src={`https://image.tmdb.org/t/p/w500${poster_path}`}
-          width={250}
+          width={300}
           alt=""
         />
         <Cont
@@ -86,8 +76,8 @@ const MoviesDetails = () => {
         gridGap={10}
       >
         <h3>Additional information:</h3>
-        <NavItem to={`cast?query=${searchQuery}`}>Cast</NavItem>
-        <NavItem to={`reviews?query=${searchQuery}`}>Reviews</NavItem>
+        <NavItem to={`cast`}>Cast</NavItem>
+        <NavItem to={`reviews`}>Reviews</NavItem>
       </Cont>
       <Suspense
         fallback={

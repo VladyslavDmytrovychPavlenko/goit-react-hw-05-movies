@@ -9,7 +9,7 @@ export const CastCard = styled.li`
   display: flex;
   flex-direction: column;
   background-color: white;
-  max-width: 180px;
+  max-width: 200px;
   justify-content: space-between;
   &:hover {
     transform: scale(1.06);
@@ -25,7 +25,7 @@ export const CastChar = styled.p`
 `;
 export const CastName = styled.p`
   font-size: 18px;
-  font-weight: 500;
+  font-weight: 600;
   color: black;
   padding-left: 5px;
   padding-right: 5px;

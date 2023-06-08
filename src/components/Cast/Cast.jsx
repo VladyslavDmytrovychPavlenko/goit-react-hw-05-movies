@@ -55,7 +55,7 @@ const Cast = () => {
           <CastCard key={index}>
             <img
               src={`https://image.tmdb.org/t/p/w500${profile_path}`}
-              width={180}
+              width={200}
               alt=""
             />
             <CastName>{name}</CastName>
